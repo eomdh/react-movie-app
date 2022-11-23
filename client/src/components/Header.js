@@ -1,18 +1,30 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Container, Button, InputBase } from '@mui/material';
+import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { styled, alpha } from '@mui/material/styles';
 import icon from '../assets/icon_white.png';
 
-const AppBarStyle = css`
-  background-color: black;
-`;
+// const AppBarStyle = css`
+//   background-color: black;
+// `;
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  position: 'relative',
+  backgroundColor: 'black',
+  width: '100%',
+  [theme.breakpoints.up('xs')]: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+}));
 
 const IconStyle = css`
   width: 45px;
   margin-right: 10px;
+s
 `;
 
 const Search = styled('div')(({ theme }) => ({
@@ -47,20 +59,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
-    width: '100%',
     '&:focus': {
-      [theme.breakpoints.up('xs')]: {
-        width: '10ch',
-      },
       [theme.breakpoints.up('sm')]: {
         width: '25ch',
       },
       [theme.breakpoints.up('lg')]: {
-        width: '40ch',
+        width: '35ch',
       }
     },
     [theme.breakpoints.up('xs')]: {
       width: '10ch',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '15ch',
     },
     [theme.breakpoints.up('lg')]: {
       width: '20ch',
@@ -68,19 +79,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ['BoxOffice', 'Movies'];
+const pages = ['boxoffice', 'movies'];
 
 function Header() {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+    const handleOpenNavMenu = (event) => {
+      setAnchorElNav(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+      setAnchorElNav(null);
+    };
+
     return (
-      <AppBar position="static" css={AppBarStyle} >
+      <StyledAppBar position="static">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
             <img src={icon} alt='icon' css={IconStyle} />
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'flex' } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
               {pages.map((page) => (
-                <Button
-                  key={page}
-                  sx={{ my: 2, color: 'white', display: 'block', }}
+                <Button 
+                  key={page} 
+                  sx={{ my: 2, color: 'white', display: 'block' }}
                   href={page}
                 >
                   {page}
@@ -96,9 +117,45 @@ function Header() {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+              }}
+              >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center" href={page}>{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+            </Box>
           </Toolbar>
         </Container>
-      </AppBar>
+      </StyledAppBar>
     )
 }
 
