@@ -1,28 +1,26 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography, Stack } from '@mui/material';
+import { BiSearchAlt2 } from "react-icons/bi";
+import { TfiMenu } from "react-icons/tfi";
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { styled, alpha } from '@mui/material/styles';
 
-// const AppBarStyle = css`
-//   background-color: black;
-// `;
-
-const LogoStyle = css`
-  width: 45px;
+const logoStyle = css`
+  width: 43px;
   margin-right: 10px;
 `;
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  position: 'relative',
   backgroundColor: 'black',
   width: '100%',
-  [theme.breakpoints.up('xs')]: {
+}));
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
     display: 'flex',
-    justifyContent: 'space-between'
-  },
+    justifyContent: "space-between",
+  }
 }));
 
 const Search = styled('div')(({ theme }) => ({
@@ -32,8 +30,6 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginLeft: 0,
-  width: '100%',
   [theme.breakpoints.up('xs')]: {
     marginLeft: theme.spacing(1),
     width: 'auto',
@@ -92,9 +88,9 @@ function NavBar() {
 
     return (
       <StyledAppBar position="static">
-        <Container maxWidth="lg">
+        <StyledContainer maxWidth="lg">
           <Toolbar disableGutters>
-            <img src="/assets/logo.png" alt='icon' css={LogoStyle} />
+            <img src="/assets/logo.png" alt='icon' css={logoStyle} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
               {pages.map((page) => (
                 <Button 
@@ -108,7 +104,7 @@ function NavBar() {
             </Box>
             <Search>
               <SearchIconWrapper>
-                <SearchIcon />
+                <BiSearchAlt2 css={css`font-size: 23px;`}/>
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search..."
@@ -124,7 +120,7 @@ function NavBar() {
                 onClick={handleOpenNavMenu}
                 color="inherit"
               >
-                <MenuIcon />
+                <TfiMenu css={css`font-size: 30px;`} />
               </IconButton>
               <Menu
               id="menu-appbar"
@@ -152,7 +148,7 @@ function NavBar() {
             </Menu>
             </Box>
           </Toolbar>
-        </Container>
+        </StyledContainer>
       </StyledAppBar>
     )
 }
