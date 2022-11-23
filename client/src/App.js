@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './components/Header';
+import NavBar from './components/NavBar';
 import AppLayout from './components/AppLayout';
 
 function App() {
   return (
     <div>
-      <Header />
+      <NavBar />
       <AppLayout>
       </AppLayout>
     </div>

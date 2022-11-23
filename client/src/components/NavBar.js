@@ -10,6 +10,11 @@ import { styled, alpha } from '@mui/material/styles';
 //   background-color: black;
 // `;
 
+const LogoStyle = css`
+  width: 45px;
+  margin-right: 10px;
+`;
+
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   position: 'relative',
   backgroundColor: 'black',
@@ -19,12 +24,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
     justifyContent: 'space-between'
   },
 }));
-
-const IconStyle = css`
-  width: 45px;
-  margin-right: 10px;
-s
-`;
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -80,7 +79,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const pages = ['boxoffice', 'movies'];
 
-function Header() {
+function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
@@ -95,7 +94,7 @@ function Header() {
       <StyledAppBar position="static">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <img src="/assets/logo.png" alt='icon' css={IconStyle} />
+            <img src="/assets/logo.png" alt='icon' css={LogoStyle} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
               {pages.map((page) => (
                 <Button 
@@ -158,4 +157,4 @@ function Header() {
     )
 }
 
-export default Header;
+export default NavBar;
