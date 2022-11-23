@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography, Stack } from '@mui/material';
+import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { BiSearchAlt2 } from "react-icons/bi";
 import { TfiMenu } from "react-icons/tfi";
 /** @jsxImportSource @emotion/react */

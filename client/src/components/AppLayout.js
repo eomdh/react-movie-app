@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Container, Grid } from '@mui/material';
+import { BsFillCalendar2DayFill, BsFillCalendar2WeekFill } from 'react-icons/bs'
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-const HeaderStyle = css`
+const headerStyle = css`
     display: flex;
     align-items: center;
     font-size: 25px;
     font-weight: bold;
     height: 60px;
     margin-bottom: 5px;
+    padding-left: 5px;
 `;
 
-const IconStyle = css`
-    font-size: 40px;
-    margin-right: 5px;
+const iconStyle = css`
+    font-size: 30px;
+    margin-right: 10px;
 `;
 
 function AppLayout() {
+    // true : daily, false : weekly
+    const [period, setPeriod] = useState(true);
+
+    // daily <-> weekly 전환하기 구현
+    const handleTimePeriod = useCallback(() => {
+        setPeriod((prev) => !prev);
+    }, [period]);
+
     return (
         <Container maxWidth="lg">
-            <Box css={HeaderStyle}>
+            <Box css={headerStyle}>
+                <BsFillCalendar2DayFill css={iconStyle} onClick={handleTimePeriod} />
+                <BsFillCalendar2WeekFill css={iconStyle} onClick={handleTimePeriod} />
                 Daily BoxOffice
             </Box>
             <Grid container spacing={1}>
