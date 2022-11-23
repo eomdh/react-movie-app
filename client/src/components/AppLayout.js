@@ -3,7 +3,7 @@ import { Box, Container, Grid } from '@mui/material';
 
 function AppLayout() {
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
             <Grid container spacing={1}>
                 <Grid item xs={6} md={3}>
                     <Box bgcolor="info.main">

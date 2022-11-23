@@ -6,8 +6,8 @@ function App() {
   return (
     <div>
       <Header />
-      {/* <AppLayout>
-      </AppLayout> */}
+      <AppLayout>
+      </AppLayout>
     </div>
   );
 };

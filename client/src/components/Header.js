@@ -5,7 +5,6 @@ import SearchIcon from '@mui/icons-material/Search';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { styled, alpha } from '@mui/material/styles';
-import icon from '../assets/icon_white.png';
 
 // const AppBarStyle = css`
 //   background-color: black;
@@ -96,7 +95,7 @@ function Header() {
       <StyledAppBar position="static">
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <img src={icon} alt='icon' css={IconStyle} />
+            <img src="/assets/logo.png" alt='icon' css={IconStyle} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
               {pages.map((page) => (
                 <Button 
