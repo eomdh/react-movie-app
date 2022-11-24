@@ -14,13 +14,10 @@ const logoStyle = css`
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: 'black',
   width: '100%',
-}));
-
-const StyledContainer = styled(Container)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.up('sm')]: {
     display: 'flex',
-    justifyContent: "space-between",
-  }
+    justifyContent: 'space-between',
+  },
 }));
 
 const Search = styled('div')(({ theme }) => ({
@@ -88,7 +85,7 @@ function NavBar() {
 
     return (
       <StyledAppBar position="static">
-        <StyledContainer maxWidth="lg">
+        <Container maxWidth="lg">
           <Toolbar disableGutters>
             <img src="/assets/logo.png" alt='icon' css={logoStyle} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
@@ -145,10 +142,10 @@ function NavBar() {
                   <Typography textAlign="center" href={page}>{page}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+              </Menu>
             </Box>
           </Toolbar>
-        </StyledContainer>
+        </Container>
       </StyledAppBar>
     )
 }
