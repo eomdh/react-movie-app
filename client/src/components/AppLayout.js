@@ -39,7 +39,7 @@ function AppLayout() {
     // true: daily / false: weekly
     const [period, setPeriod] = useState(true);
 
-    // daily <-> weekly 전환하기
+    // daily <-> weekly
     const handlePeriod = useCallback((selected) => {
         if (selected && !period) {
             setPeriod(true);
