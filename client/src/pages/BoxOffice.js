@@ -8,4 +8,4 @@ function BoxOffice() {
   );
 };
 
-export default SearchMovies;
+export default BoxOffice;

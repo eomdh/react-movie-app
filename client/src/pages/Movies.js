@@ -8,4 +8,4 @@ function Movies() {
   );
 };
 
-export default SearchMovies;
+export default Movies;
