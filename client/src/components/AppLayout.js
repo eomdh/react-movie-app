@@ -6,15 +6,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import MovieCard from './MovieCard';
 
-
 const headerStyle = css`
   display: flex;
   align-items: center;
   font-size: 25px;
   font-weight: bold;
-  height: 60px;s
-  margin-bottom: 5px;
-  padding-left: 5px;
+  height: 70px;
+  padding-bottom: 5px;
 `;
 
 const StyledDailyIcon = styled(BsFillCalendar2DayFill)`
@@ -58,6 +56,18 @@ function AppLayout() {
       genre: '액션', 
       directorNm: '이석훈',
       repRlsDate: '2022. 09. 07',
+    },
+    { 
+      title: '공조2: 인터내셔날',
+      genre: '액션', 
+      directorNm: '이석훈',
+      repRlsDate: '2022. 09. 07',
+    },
+    { 
+      title: '공조2: 인터내셔날',
+      genre: '액션', 
+      directorNm: '이석훈',
+      repRlsDate: '2022. 09. 07',
     }
   ]);
 
@@ -82,7 +92,7 @@ function AppLayout() {
       <Grid container spacing={1}>
           {movies.map((item) => (
               <Grid item xs={6} md={3}>
-                <MovieCard></MovieCard>
+                <MovieCard />
               </Grid>
           ))};
       </Grid>

@@ -7,17 +7,15 @@ function MovieCard() {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
+          image="http://file.koreafilm.or.kr/thm/02/00/05/18/tn_DPK014596.jpg"
+          alt="title"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Lizard
+            Title
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+          <Typography variant="body1" color="text.secondary">
+            Subtitle
           </Typography>
         </CardContent>
       </CardActionArea>
