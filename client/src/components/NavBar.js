@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Container, Button, InputBase, IconButton, Menu, MenuItem, Typography, Link } from '@mui/material';
 import { BiSearchAlt2 } from "react-icons/bi";
 import { TfiMenu } from "react-icons/tfi";
 /** @jsxImportSource @emotion/react */
@@ -138,8 +138,10 @@ function NavBar() {
               }}
               >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" href={page}>{page}</Typography>
+                <MenuItem key={page} onClick={handleCloseNavMenu} link={page} >
+                  <Typography textAlign="center">
+                    <Link href={page}>{page}</Link>
+                  </Typography>
                 </MenuItem>
               ))}
               </Menu>
