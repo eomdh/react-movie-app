@@ -95,7 +95,9 @@ function NavBar() {
                   sx={{ my: 2, color: 'white', display: 'block' }}
                   href={page}
                 >
-                  {page}
+                  <Typography variant='h6'>
+                    {page}
+                  </Typography>
                 </Button>
               ))}
             </Box>
