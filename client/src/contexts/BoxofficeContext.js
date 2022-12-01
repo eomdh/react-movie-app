@@ -1,4 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
+import axios from 'axios';
+
+const KOBIS_KEY = process.env.REACT_APP_KOBIS_KEY;
 
 const initialState = {
   boxoffice: {
@@ -36,12 +39,12 @@ function boxofficeReducer(state, action) {
     case 'GET_BOXOFFICE_SUCCESS':
       return {
         ...state,
-        boxoffice: loadingState
+        boxoffice: success(action.data)
       };
     case 'GET_BOXOFFICE_FAILURE':
       return {
         ...state,
-        boxoffice: loadingState
+        boxoffice: failure(error)
       };
     default:
       throw new Error(`Unhandle action type: ${action.type}`);
@@ -71,9 +74,29 @@ export function useBoxofficeState() {
 };
 
 export function useBoxofficeDispatch() {
-  const state = useContext(BoxofficeDispatchContext);
-  if (!state) {
+  const dispatch = useContext(BoxofficeDispatchContext);
+  if (!dispatch) {
     throw new Error(`Cannot find BoxofficeProvider`);
   }
   return state;
+};
+
+export async function getBoxoffice(dispatch, data) {
+  dispatch({ type: 'GET_BOXOFFICE_LOADING' });
+
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDay()).slice(-2);
+  const nowDate = year + month + day;
+  const period = data ? "Daily" : "Weekly";
+
+  try {
+    const response = await axios.get(
+      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${nowDate}`
+    );
+    dispatch({ type: 'GET_BOXOFFICE_SUCCESS', data: response.data })
+  } catch(e) {
+    dispatch({ type: 'GET_BOXOFFICE_FAILURE', error: e });
+  };
 };
