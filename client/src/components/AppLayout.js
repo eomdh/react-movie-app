@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Container, Grid } from '@mui/material';
 import { BsFillCalendar2DayFill, BsFillCalendar2WeekFill } from 'react-icons/bs'
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import MovieCard from './MovieCard';
+import { useBoxofficeDispatch, useBoxofficeState, getBoxoffice } from '../contexts/boxofficeContext';
 
 const headerStyle = css`
   display: flex;
@@ -38,6 +39,13 @@ const StyledWeeklyIcon = styled(BsFillCalendar2WeekFill)`
 function AppLayout() {
   // true: daily / false: weekly
   const [period, setPeriod] = useState(true);
+  const state = useBoxofficeState();
+  const dispatch = useBoxofficeDispatch();
+
+  useEffect(() => {
+    getBoxoffice(dispatch, period);
+  }, [dispatch, period]);
+
   const [movies, setMovies] = useState([
     { 
       title: '기생충',
@@ -90,7 +98,7 @@ function AppLayout() {
           {period ? "Daily BoxOffice" : "Weekly BoxOffice" }
       </Box>
       <Grid container spacing={1}>
-          {movies.map((item) => (
+          {BoxOffice.map((item) => (
               <Grid item xs={6} md={3}>
                 <MovieCard />
               </Grid>
