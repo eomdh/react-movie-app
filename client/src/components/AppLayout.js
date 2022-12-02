@@ -5,7 +5,7 @@ import { BsFillCalendar2DayFill, BsFillCalendar2WeekFill } from 'react-icons/bs'
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import MovieCard from './MovieCard';
-import { useBoxofficeDispatch, useBoxofficeState, getBoxoffice } from '../contexts/boxofficeContext';
+import { useBoxofficeDispatch, useBoxofficeState, getBoxoffice } from '../contexts/BoxofficeContext';
 
 const headerStyle = css`
   display: flex;
@@ -41,6 +41,8 @@ function AppLayout() {
   const [period, setPeriod] = useState(true);
   const state = useBoxofficeState();
   const dispatch = useBoxofficeDispatch();
+
+  const { data: boxoffice, loading, error } = state.boxoffice;
 
   useEffect(() => {
     getBoxoffice(dispatch, period);
@@ -97,13 +99,13 @@ function AppLayout() {
           <StyledWeeklyIcon period={period} onClick={handlePeriod.bind(this, false)} />
           {period ? "Daily BoxOffice" : "Weekly BoxOffice" }
       </Box>
-      <Grid container spacing={1}>
-          {BoxOffice.map((item) => (
+      {/* <Grid container spacing={1}>
+          {boxoffice.map((item) => (
               <Grid item xs={6} md={3}>
                 <MovieCard />
               </Grid>
           ))};
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };

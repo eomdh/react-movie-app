@@ -18,7 +18,7 @@ const loading = {
 };
 
 const success = data => ({
-  loading: false,
+  loading: false, 
   data,
   error: null,
 });
@@ -34,9 +34,10 @@ function boxofficeReducer(state, action) {
     case 'GET_BOXOFFICE_LOADING':
       return {
         ...state,
-        boxoffice: loadingState
+        boxoffice: loading
       };
     case 'GET_BOXOFFICE_SUCCESS':
+      console.log(action.data);
       return {
         ...state,
         boxoffice: success(action.data)
@@ -44,7 +45,7 @@ function boxofficeReducer(state, action) {
     case 'GET_BOXOFFICE_FAILURE':
       return {
         ...state,
-        boxoffice: failure(error)
+        boxoffice: failure(action.error)
       };
     default:
       throw new Error(`Unhandle action type: ${action.type}`);
@@ -54,8 +55,8 @@ function boxofficeReducer(state, action) {
 const BoxofficeStateContext = createContext(null);
 const BoxofficeDispatchContext = createContext(null);
 
-export function UserProvider({ children }) {
-  const [state, dispatch] = useReducer(useReducer, initialState);
+export function BoxofficeProvider({ children }) {
+  const [state, dispatch] = useReducer(boxofficeReducer, initialState);
   return (
     <BoxofficeStateContext.Provider value={state}>
       <BoxofficeDispatchContext.Provider value={dispatch}>
@@ -78,22 +79,24 @@ export function useBoxofficeDispatch() {
   if (!dispatch) {
     throw new Error(`Cannot find BoxofficeProvider`);
   }
-  return state;
+  return dispatch;
 };
 
 export async function getBoxoffice(dispatch, data) {
   dispatch({ type: 'GET_BOXOFFICE_LOADING' });
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDay()).slice(-2);
-  const nowDate = year + month + day;
+  const loadDt = new Date();  
+  const setDt = new Date(loadDt.setDate(loadDt.getDate() - 1));
+  const year = setDt.getFullYear();                             
+  const month = ('0' + (setDt.getMonth() + 1)).slice(-2);
+  const day = ('0' + setDt.getDate()).slice(-2);                
+  const date = year + month + day;
+
   const period = data ? "Daily" : "Weekly";
 
   try {
     const response = await axios.get(
-      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${nowDate}`
+      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${date}`
     );
     dispatch({ type: 'GET_BOXOFFICE_SUCCESS', data: response.data })
   } catch(e) {
