@@ -37,7 +37,6 @@ function boxofficeReducer(state, action) {
         boxoffice: loading
       };
     case 'GET_BOXOFFICE_SUCCESS':
-      console.log(action.data);
       return {
         ...state,
         boxoffice: success(action.data)
@@ -85,15 +84,24 @@ export function useBoxofficeDispatch() {
 export async function getBoxoffice(dispatch, data) {
   dispatch({ type: 'GET_BOXOFFICE_LOADING' });
 
-  const loadDt = new Date();  
-  const setDt = new Date(loadDt.setDate(loadDt.getDate() - 1));
-  const year = setDt.getFullYear();                             
+  const period = data ? "Daily" : "Weekly";
+  
+  let loadDt = new Date();
+  let setDt;
+
+  if (data) {           // Daily
+    setDt = new Date(loadDt.setDate(loadDt.getDate() - 1));
+  } else if (!data) {   // Weekly
+    const day = loadDt.getDay();
+    const temp = day + 6;
+    setDt = new Date(loadDt.setDate(loadDt.getDate() - temp));
+  }
+
+  const year = setDt.getFullYear();
   const month = ('0' + (setDt.getMonth() + 1)).slice(-2);
   const day = ('0' + setDt.getDate()).slice(-2);                
   const date = year + month + day;
-
-  const period = data ? "Daily" : "Weekly";
-
+  
   try {
     const response = await axios.get(
       `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${date}`
