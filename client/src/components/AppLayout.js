@@ -42,44 +42,15 @@ function AppLayout() {
   const state = useBoxofficeState();
   const dispatch = useBoxofficeDispatch();
 
-  const { data: boxoffice, loading, error } = state.boxoffice;
+  const boxoffice = state.boxoffice;
+
+  boxoffice.map((item) => {
+    console.log(item);
+  })
 
   useEffect(() => {
     getBoxoffice(dispatch, period);
-  }, [dispatch, period]);
-
-  const [movies, setMovies] = useState([
-    { 
-      title: '기생충',
-      genre: '드라마',
-      directorNm: '봉준호',
-      repRlsDate: '2019. 05. 30',
-    },
-    { 
-      title: '한산: 용의 출현',
-      genre: '액션',
-      directorNm: '김한민',
-      repRlsDate: '2022. 07. 27',
-    },
-    { 
-      title: '공조2: 인터내셔날',
-      genre: '액션', 
-      directorNm: '이석훈',
-      repRlsDate: '2022. 09. 07',
-    },
-    { 
-      title: '공조2: 인터내셔날',
-      genre: '액션', 
-      directorNm: '이석훈',
-      repRlsDate: '2022. 09. 07',
-    },
-    { 
-      title: '공조2: 인터내셔날',
-      genre: '액션', 
-      directorNm: '이석훈',
-      repRlsDate: '2022. 09. 07',
-    }
-  ]);
+  }, [period]);
 
   // daily <-> weekly
   const handlePeriod = useCallback((selected) => {
@@ -89,23 +60,25 @@ function AppLayout() {
       setPeriod(false);
     } else {
       return;
-    }
+    };
   }, [period]);
 
   return (
     <Container maxWidth="lg">
       <Box css={headerStyle}>
-          <StyledDailyIcon period={period} onClick={handlePeriod.bind(this, true)} />
-          <StyledWeeklyIcon period={period} onClick={handlePeriod.bind(this, false)} />
-          {period ? "Daily BoxOffice" : "Weekly BoxOffice" }
+        <StyledDailyIcon period={period} onClick={handlePeriod.bind(this, true)} />
+        <StyledWeeklyIcon period={period} onClick={handlePeriod.bind(this, false)} />
+        {period ? "Daily BoxOffice" : "Weekly BoxOffice" }
       </Box>
-      {/* <Grid container spacing={1}>
-          {boxoffice.map((item) => (
-              <Grid item xs={6} md={3}>
-                <MovieCard />
-              </Grid>
-          ))};
-      </Grid> */}
+      <Grid container spacing={1}>
+        {boxoffice.map((item) => {
+          return (
+            <Grid item xs={6} md={3}>
+              <MovieCard title={item.movieNm} />
+            </Grid>
+          )
+        })}
+      </Grid>
     </Container>
   );
 };

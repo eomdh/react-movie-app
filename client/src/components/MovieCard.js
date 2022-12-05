@@ -1,7 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material/';
 
-function MovieCard() {
+function MovieCard(props) {
+  console.log(props);
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -12,10 +14,10 @@ function MovieCard() {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Title
+            {props.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Subtitle
+            d
           </Typography>
         </CardContent>
       </CardActionArea>

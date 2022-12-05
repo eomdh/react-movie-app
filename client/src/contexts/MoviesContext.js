@@ -1,15 +1,8 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 const initialState = {
-  movies: {
-    loading: false,
-    data: null,
-    error: null,
-  },
-  movie: {
-    loading: false,
-    data: null,
-    error: null,
-  }
+  movies: [],
+  loadMoviesLoading: false,
+  loadMoviesDone: false,
+  loadMoviesError: null,
 };
-
