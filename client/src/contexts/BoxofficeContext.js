@@ -10,24 +10,6 @@ const initialState = {
   loadBoxofficeError: null,
 };
 
-const loading = {
-  loading: true,
-  data: null,
-  error: null,
-};
-
-const success = data => ({
-  loading: false, 
-  data,
-  error: null,
-});
-
-const failure = error => ({
-  loading: true,
-  data: null,
-  error: error,
-});
-
 function boxofficeReducer(state, action) {
   switch (action.type) {
     case 'GET_BOXOFFICE_LOADING':
@@ -38,13 +20,12 @@ function boxofficeReducer(state, action) {
         loadBoxofficeError: null,
       };
     case 'GET_BOXOFFICE_SUCCESS':
-      console.log(action.data.boxOfficeResult.dailyBoxOfficeList);
       return {
         ...state,
         loadBoxofficeLoading: false,
         loadBoxofficeDone: true,
         loadBoxofficeError: null,
-        boxoffice: action.data.boxOfficeResult.dailyBoxOfficeList
+        boxoffice: action.data.boxOfficeResult.dailyBoxOfficeList,
       };
     case 'GET_BOXOFFICE_FAILURE':
       return {
@@ -52,22 +33,6 @@ function boxofficeReducer(state, action) {
         loadBoxofficeLoading: false,
         loadBoxofficeDone: false,
         loadBoxofficeError: action.error,
-      };
-    case 'GET_MOVIES_LOADING':
-      return {
-        ...state,
-        moives: loading
-      };
-    case 'GET_MOVIES_SUCCESS':
-      console.log(action.data);
-      return {
-        ...state,
-        moives: success(action.data)
-      };
-    case 'GET_MOVIES_FAILURE':
-      return {
-        ...state,
-        moives: failure(action.error)
       };
     default:
       throw new Error(`Unhandle action type: ${action.type}`);
@@ -127,14 +92,10 @@ export async function getBoxoffice(dispatch, data) {
   
   try {
     const response = await axios.get(
-      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${date}`
+      `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search${period}BoxOfficeList.json?key=${KOBIS_KEY}&targetDt=${date}&repNationCd=K`
     );
     dispatch({ type: 'GET_BOXOFFICE_SUCCESS', data: response.data })
-  } catch(e) {
+  } catch (e) {
     dispatch({ type: 'GET_BOXOFFICE_FAILURE', error: e });
   };
-}
-
-export async function getMovies(dispatch, data) {
-  dispatch({ type: 'GET_MOVIES_LOADING' });
 };

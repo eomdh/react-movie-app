@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@mui/material/';
 
-function MovieCard(props) {
-  console.log(props);
+function MovieCard() {
+  // console.log(props);
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -14,7 +14,7 @@ function MovieCard(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.title}
+            d
           </Typography>
           <Typography variant="body1" color="text.secondary">
             d
