@@ -47,11 +47,13 @@ function Boxoffice() {
 
   useEffect(() => {
     getBoxoffice(dispatch, period);
-  }, [period, dispatch]);
+  }, [dispatch, period]);
 
   boxoffice.map((item) => {
-    movieList.push(item.movieCd);
-  })
+    return (
+      movieList.push(item.movieCd)
+    )
+  });
 
   // daily <-> weekly
   const handlePeriod = useCallback((selected) => {
@@ -71,7 +73,7 @@ function Boxoffice() {
         <StyledWeeklyIcon period={period} onClick={handlePeriod.bind(this, false)} />
         {period ? "Daily BoxOffice" : "Weekly BoxOffice" }
       </Box>
-      <AppLayout movieList={movieList}/>
+      {movieList.length === 10 && <AppLayout movieList={movieList} />}
     </Container>
   );
 };

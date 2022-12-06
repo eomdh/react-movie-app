@@ -1,28 +1,39 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import MovieCard from './MovieCard';
 import { useMoviesInfoState, useMoviesInfoDispatch, getMoviesInfo } from '../contexts/MoviesContext'
 
-function AppLayout(movieList) {
+function AppLayout(props) {
   const state = useMoviesInfoState();
   const dispatch = useMoviesInfoDispatch();
-
-  console.log(movieList.movieList);
+  const movieList = props.movieList;
+  const movies = state.moviesInfo;
+  const movie = [];
 
   useEffect(() => {
-    getMoviesInfo(dispatch, movieList.movieList);
-  }, [movieList]);
+    getMoviesInfo(dispatch, movieList);
+  }, [dispatch, movieList]);
+
+  movies.map((item) => {
+    return (
+      movie.push(item)
+    )
+  });
+
+  console.log(movie);
 
   return (
     <>
       <Grid container spacing={1}>
-        {/* {.map((item) => {
+        {movie && movie.map((movie) => {
           return (
-            <Grid item xs={6} md={3}>
-              <MovieCard />
+            <Grid item xs={6} md={3} key={movie.movieSeq}>
+              <MovieCard
+                movieInfo={movie}
+              />
             </Grid>
           );
-        })} */}
+        })}
       </Grid>
     </>
   );

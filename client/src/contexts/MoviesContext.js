@@ -20,13 +20,12 @@ function moviesInfoReducer(state, action) {
         loadMoviesInfoError: null,
       }
     case 'GET_MOVIES_INFO_SUCCESS':
-      console.log(action.data);
       return {
         ...state,
         loadMoviesInfoLoading: false,
         loadMoviesInfoDone: true,
         loadMoviesInfoError: null,
-        // moviesInfo: 
+        moviesInfo: action.data
       }
     case 'GET_MOVIES_INFO_FAILURE':
       return {
@@ -80,11 +79,10 @@ export async function getMoviesInfo(dispatch, data) {
       const response = await axios.get(
         `http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&ServiceKey=${KMDB_KEY}&detail=Y&codeNo=${movieCode}`
       );
-      console.log(response.data.Data[0].Result);
-      // moviesInfo.push(response.data.Data[0].Result);
+      moviesInfo.push(response.data.Data[0].Result);
     });
 
-    // await dispatch({ type: 'GET_MOVIES_INFO_SUCCESS', data: moviesInfo });
+    await dispatch({ type: 'GET_MOVIES_INFO_SUCCESS', data: moviesInfo });
   } catch (e) {
     dispatch({ type: 'GET_MOVIES_INFO_FAILURE', error: e});
   };
